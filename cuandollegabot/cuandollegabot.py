@@ -45,9 +45,11 @@ logger.addHandler(shandler)
 def new_message():
     # logger.debug(os.environ.get("CL_TOKEN", "cuandollegabot"))
     if request.method == "POST":
-        update = telegram.Update.de_json(request.get_json(force=True))
-        eval_update(db, bot, update)
-
+        try:
+            update = telegram.Update.de_json(request.get_json(force=True))
+            eval_update(db, bot, update)
+        except Exception as e:
+            logger.debug(e)
     return 'ok'
 
 
