@@ -41,7 +41,7 @@ shandler.setFormatter(formatter)
 logger.addHandler(shandler)
 
 
-@app.route("/" + token, methods=['POST'])
+@app.route("/bot", methods=['POST'])
 def new_message():
     # logger.debug(os.environ.get("CL_TOKEN", "cuandollegabot"))
     if request.method == "POST":
