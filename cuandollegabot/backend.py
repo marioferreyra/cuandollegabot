@@ -18,7 +18,6 @@ def eval_update(db, bot, update):
     message_text = update.message.text.strip().lower()
     chat_id = update.message.chat_id
     logger.debug("ID {0} - User {1} - Msg {2}".format(chat_id, user_name, message_text))
-    import ipdb; ipdb.set_trace()  # breakpoint 871b4f5f //
 
     if COMANDS.__contains__(message_text):
         if(message_text == COMAND_WHEN):
