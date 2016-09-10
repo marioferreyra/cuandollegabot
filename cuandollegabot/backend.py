@@ -19,6 +19,11 @@ def eval_update(db, bot, update):
     chat_id = update.message.chat_id
     logger.debug("ID {0} - User {1} - Msg {2}".format(chat_id, user_name, message_text))
 
+    try:
+        setUpUser(db, user_name, chat_id)
+    except Exception as ex:
+        logger.debug(ex)
+
     if COMANDS.__contains__(message_text):
         if(message_text == COMAND_WHEN):
             text = """ {0}, el comando correcto es

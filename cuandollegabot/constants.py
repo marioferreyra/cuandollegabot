@@ -19,13 +19,13 @@ MODULE_ROSARIO = 1
 NICE_MESSAGE = """{0}, eres la persona más maravillosa y bella del mundo \
 pero tu mensaje no es correcto"""
 
-WHEN_SENDING_INFO = "Voy a enviarte la información del colectivo, asegúrate de estar antes\
- en la esquina. Disculpame si no es acertada, es el dato que me dan."
+WHEN_SENDING_INFO = """Voy a enviarte la información del colectivo, asegúrate de estar antes\
+ en la esquina. Disculpame si no es acertada, es el dato que me dan."""
 WHEN_PARAMS_ERROR = "Recuerda que debes enviar /cuando, un colectivo y y un número de 4 dígitos."
 WHEN_RIGHT_COMMAND = ""
 
-STOP_SENDING_BUSES = "Voy a enviarte todos los colectivos de esa parada, espero no olvidar ninguno\
-. Asegúrate de estar en la esquina."
+STOP_SENDING_BUSES = """Voy a enviarte todos los colectivos de esa parada, espero no olvidar ninguno\
+. Asegúrate de estar en la esquina."""
 STOP_PARAMS_ERROR = "Recuerda que debes enviar /parada y un número de 4 dígitos."
 STOP_RIGHT_COMMAND = ""
 STOP_WRONG_STOP = "Oops, no tengo ese dato."
