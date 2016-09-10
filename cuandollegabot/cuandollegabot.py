@@ -20,6 +20,7 @@ bot = telegram.Bot(token=token)
 
 logger = logging.getLogger(__name__)
 formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+logger.setLevel(logging.DEBUG)
 
 if os.environ.get("PAPERTRAIL_API_TOKEN"):
     pass
@@ -32,7 +33,7 @@ if os.environ.get("PAPERTRAIL_API_TOKEN"):
 else:
     fhandler = logging.FileHandler(__name__ + ".log")
     fhandler.setFormatter(formatter)
-    logger.setLevel(logging.DEBUG)
+
     logger.addHandler(fhandler)
 
 
