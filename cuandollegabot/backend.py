@@ -41,7 +41,8 @@ def eval_update(db, bot, update):
 
         elif message_text == COMAND_STOP:
             text = """{0}, el comando correcto es
-            /parada PARADA""".format(user_name)
+            /parada PARADA
+            ACTUALMENTE DESHABILITADO""".format(user_name)
             reply_markup = telegram.ReplyKeyboardHide()
 
         else:
@@ -84,6 +85,13 @@ def eval_update(db, bot, update):
         botSendMessage(bot, chat_id, user_name, text=text, reply_markup=reply_markup)
 
     elif message_text.__contains__(COMAND_STOP):
+        # Comando deshabilitado
+        text = "Disculpá {0}, el comando /parada " \
+            "está ACTUALMENTE DESHABILITADO".format(user_name)
+        reply_markup = telegram.ReplyKeyboardHide()
+        botSendMessage(bot, chat_id, user_name, text=text, reply_markup=reply_markup)
+        return
+
         params = message_text.strip().replace(
             COMAND_STOP, '').strip().split(' ')
         if len(params) != 1 or not params[0].isdigit():
