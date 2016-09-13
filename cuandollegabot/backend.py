@@ -8,7 +8,7 @@ from constants import (NICE_MESSAGE, COMANDS, COMAND_START, COMAND_HELP,
                        COMAND_WHEN, WHEN_SENDING_INFO, WHEN_PARAMS_ERROR, WHEN_RIGHT_COMMAND,
                        COMAND_STOP, STOP_SENDING_BUSES, STOP_PARAMS_ERROR,
                        STOP_RIGHT_COMMAND, STOP_WRONG_STOP, COMANDS_SEND_MSG)
-from cuandollegabotconfig import OWNER_ID
+from cuandollegabotconfig import OWNER_ID, SKIP_PARADA
 
 logger = logging.getLogger('CuandoLlegaBot')
 
@@ -87,11 +87,12 @@ def eval_update(db, bot, update):
 
     elif message_text.__contains__(COMAND_STOP):
         # Comando deshabilitado
-        text = "Disculpá {0}, el comando /parada " \
-            "está ACTUALMENTE DESHABILITADO".format(user_name)
-        reply_markup = telegram.ReplyKeyboardHide()
-        botSendMessage(bot, chat_id, user_name, text=text, reply_markup=reply_markup)
-        return
+        if(SKIP_PARADA):
+            text = "Disculpá {0}, el comando /parada " \
+                "está ACTUALMENTE DESHABILITADO".format(user_name)
+            reply_markup = telegram.ReplyKeyboardHide()
+            botSendMessage(bot, chat_id, user_name, text=text, reply_markup=reply_markup)
+            return
 
         params = message_text.strip().replace(
             COMAND_STOP, '').strip().split(' ')
@@ -110,7 +111,7 @@ def eval_update(db, bot, update):
                     botSendMessage(bot, chat_id, user_name, text=text)
                     logger.debug("Bus:{0}, Stop:{1}".format(bus, stop))
                     bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-                    time.sleep(5)
+                    time.sleep(1)
                 array_buttons = [[message_text]]
                 array_buttons.extend(getOtherBusesInStop(chat_id, db, stop))
                 text = getBusStopInfo(chat_id, db, buses[-1], stop)
