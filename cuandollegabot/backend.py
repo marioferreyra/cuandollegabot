@@ -55,6 +55,7 @@ def eval_update(db, bot, update):
         botSendMessage(bot, chat_id, user_name, text="De nada {0}".format(user_name))
 
     elif (message_text.startswith(COMANDS_SEND_MSG) and int(chat_id) == int(OWNER_ID)):
+        pass
         message = message_text.replace(COMANDS_SEND_MSG, "")
         for user_id in getUsers(db):
             botSendMessage(bot, user_id, None, text=message, disable_notification=True)
