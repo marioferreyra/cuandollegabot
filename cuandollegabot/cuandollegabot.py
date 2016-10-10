@@ -64,6 +64,7 @@ def is_processing(func):
 # @is_processing
 def new_message():
     # logger.debug(os.environ.get("CL_TOKEN", "cuandollegabot"))
+    logger.debug(processing)
     if request.method == "POST":
         try:
             update = telegram.Update.de_json(request.get_json(force=True))
