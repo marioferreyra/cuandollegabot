@@ -73,6 +73,7 @@ def new_message():
     if request.method == "POST":
         try:
             update = telegram.Update.de_json(request.get_json(force=True))
+            logger.debug("Update actual %s", update.update_id)
             if not is_processing(update.update_id):
                 eval_update(db, bot, update)
             else:
