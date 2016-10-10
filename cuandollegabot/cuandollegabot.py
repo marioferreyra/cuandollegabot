@@ -46,13 +46,13 @@ processing = []
 
 
 def is_processing(func):
-    logger.info("Entrando a is_processing")
-
     @wraps(func)
     def wrapper(*args, **kwargs):
-        logger.info("Entrando a wrapped")
         json_data = request.get_json()
-        logger.debug(json_data["update_id"])
+        update_id = json_data["update_id"]
+        if update_id in processing:
+            return 'ok'
+        processing.append(update_id)
         return func(*args, **kwargs)
     return wrapper
 
