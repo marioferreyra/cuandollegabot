@@ -46,15 +46,21 @@ logger.addHandler(shandler)
 processing = {}
 
 
+@app.errorhandler(500)
+def _500(error):
+    logger.error("Server error: %s", error)
+
+
 def is_processing(update_id):
     if update_id in processing:
+        logger.warning("Update en procesamiento {0}".format(update_id))
         return True
     processing[update_id] = datetime.now()
 
 
 def clear_processing():
     processing = {k: v for k, v in processing.items() if (
-        datetime.datetime.now() - v).total_seconds() > 120}
+        datetime.now() - v).total_seconds() > 120}
 
 
 @app.route("/bot", methods=['POST'])
