@@ -111,7 +111,7 @@ def eval_update(db, bot, update):
                     botSendMessage(bot, chat_id, user_name, text=text)
                     logger.debug("Bus:{0}, Stop:{1}".format(bus, stop))
                     bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-                    time.sleep(10)
+                    time.sleep(1)
                 array_buttons = [[message_text]]
                 array_buttons.extend(getOtherBusesInStop(chat_id, db, stop))
                 text = getBusStopInfo(chat_id, db, buses[-1], stop)

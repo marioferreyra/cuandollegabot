@@ -134,7 +134,7 @@ class RosarioCuandoLlega():
             r.encoding = 'UTF-8'
             return r.text.splitlines()[:1][-1].strip()
         except Exception as e:
-            logger.debug(e)
+            logger.error(e)
             return "Error, por favor intente nuevamente en unos minutos"
 
     def getOtherBusesInStop(self, stop):
@@ -142,5 +142,5 @@ class RosarioCuandoLlega():
         buses = buses_collection.find(
             {'firsts_streets.second_streets.stops.nro': int(stop)}, {"nro": 1})
         other_buses = [magic_decode(b['nro'], deco='cp1251') for b in buses]
-        logger.debug(other_buses)
+        # logger.debug(other_buses)
         return other_buses

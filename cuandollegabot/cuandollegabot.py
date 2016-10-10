@@ -69,9 +69,9 @@ def new_message():
         try:
             update = telegram.Update.de_json(request.get_json(force=True))
             if update.update_id not in processing:
-                processing.append(update.update_id)
+                # processing.append(update.update_id)
                 eval_update(db, bot, update)
-                processing.remove(update.update_id)
+                # processing.remove(update.update_id)
             else:
                 logger.warning("Update {0} ya procesada".format(update.update_id))
         except Exception as e:
