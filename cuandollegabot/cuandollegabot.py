@@ -2,6 +2,7 @@
 import os
 import logging
 from logging.handlers import SysLogHandler
+from functools import wraps
 from flask import Flask, request
 from pymongo import MongoClient
 import telegram
@@ -41,8 +42,23 @@ shandler = logging.StreamHandler()
 shandler.setFormatter(formatter)
 logger.addHandler(shandler)
 
+processing = []
+
+
+def is_processing(f):
+    def decorator(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            try:
+                logger.debug(request.data)
+            except Exception as e:
+                logger.error(e)
+        return wrapped
+    return decorator
+
 
 @app.route("/bot", methods=['POST'])
+@is_processing
 def new_message():
     # logger.debug(os.environ.get("CL_TOKEN", "cuandollegabot"))
     if request.method == "POST":
@@ -64,6 +80,7 @@ def reloadDBRosario():
 @app.route("/")
 def index():
     return "Index"
+
 
 if __name__ == '__main__':
     debugging = False if os.environ.get('DEBUG') else True
