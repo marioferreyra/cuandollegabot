@@ -45,22 +45,16 @@ logger.addHandler(shandler)
 processing = []
 
 
-def is_processing(f):
+def is_processing(func):
     logger.info("Entrando a is_processing")
 
-    def decorator(f):
-        logger.info("Entrando a decorator")
-
-        @wraps(f)
-        def wrapped(*args, **kwargs):
-            try:
-                logger.info("Entrando a wrapped")
-                logger.debug(request.data)
-            except Exception as e:
-                logger.error(e)
-            return f
-        return wrapped
-    return decorator
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        logger.info("Entrando a wrapped")
+        json_data = request.get_json()
+        logger.debug(json_data)
+        return func(*args, **kwargs)
+    return wrapper
 
 
 @app.route("/bot", methods=['POST'])
