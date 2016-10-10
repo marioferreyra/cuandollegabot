@@ -58,6 +58,7 @@ def is_processing(f):
                 logger.debug(request.data)
             except Exception as e:
                 logger.error(e)
+            return f
         return wrapped
     return decorator
 
