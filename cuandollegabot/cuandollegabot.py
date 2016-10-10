@@ -58,7 +58,7 @@ def is_processing(func):
 
 
 @app.route("/bot", methods=['POST'])
-# @is_processing
+@is_processing
 def new_message():
     # logger.debug(os.environ.get("CL_TOKEN", "cuandollegabot"))
     if request.method == "POST":
