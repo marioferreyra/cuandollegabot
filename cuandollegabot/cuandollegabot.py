@@ -53,7 +53,9 @@ def is_processing(func):
         if update_id in processing:
             return 'ok'
         processing.append(update_id)
-        return func(*args, **kwargs)
+        ret = func(*args, **kwargs)
+        processing.remove(update_id)
+        return ret
     return wrapper
 
 
