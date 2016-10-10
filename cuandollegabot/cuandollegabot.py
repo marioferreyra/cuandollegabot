@@ -61,13 +61,18 @@ def is_processing(func):
 
 
 @app.route("/bot", methods=['POST'])
-@is_processing
+# @is_processing
 def new_message():
     # logger.debug(os.environ.get("CL_TOKEN", "cuandollegabot"))
     if request.method == "POST":
         try:
             update = telegram.Update.de_json(request.get_json(force=True))
-            eval_update(db, bot, update)
+            if update.update_id not in processing:
+                processing.append(update.update_id)
+                eval_update(db, bot, update)
+                processing.remove(update.update_id)
+            else:
+                logger.warning("Update {0} ya procesada".format(update.update_id))
         except Exception as e:
             logger.debug(e)
     return 'ok'
