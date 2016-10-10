@@ -11,6 +11,7 @@ from constants import (NICE_MESSAGE, COMANDS, COMAND_START, COMAND_HELP,
 from cuandollegabotconfig import OWNER_ID, SKIP_PARADA
 
 logger = logging.getLogger('CuandoLlegaBot')
+sleep_time = 10
 
 
 def eval_update(db, bot, update):
@@ -111,7 +112,7 @@ def eval_update(db, bot, update):
                     botSendMessage(bot, chat_id, user_name, text=text)
                     logger.debug("Bus:{0}, Stop:{1}".format(bus, stop))
                     bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-                    time.sleep(1)
+                    time.sleep(sleep_time)
                 array_buttons = [[message_text]]
                 array_buttons.extend(getOtherBusesInStop(chat_id, db, stop))
                 text = getBusStopInfo(chat_id, db, buses[-1], stop)

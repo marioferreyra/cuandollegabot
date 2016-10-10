@@ -3,6 +3,7 @@ import os
 import logging
 from logging.handlers import SysLogHandler
 from functools import wraps
+from datetime import datetime
 from flask import Flask, request
 from pymongo import MongoClient
 import telegram
@@ -42,36 +43,30 @@ shandler = logging.StreamHandler()
 shandler.setFormatter(formatter)
 logger.addHandler(shandler)
 
-processing = []
+processing = {}
 
 
-def is_processing(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        json_data = request.get_json()
-        update_id = json_data["update_id"]
-        if update_id in processing:
-            logger.warning("Update {0} ya procesada".format(update_id))
-            return 'ok'
-        processing.append(update_id)
-        ret = func(*args, **kwargs)
-        processing.remove(update_id)
-        return ret
-    return wrapper
+def is_processing(update_id):
+    if update_id in processing:
+        return True
+    processing[update_id] = datetime.now()
+
+
+def clear_processing():
+    processing = {k: v for k, v in processing.items() if (
+        datetime.datetime.now() - v).total_seconds() > 120}
 
 
 @app.route("/bot", methods=['POST'])
-# @is_processing
 def new_message():
     # logger.debug(os.environ.get("CL_TOKEN", "cuandollegabot"))
     logger.debug(processing)
+    clear_processing()
     if request.method == "POST":
         try:
             update = telegram.Update.de_json(request.get_json(force=True))
-            if update.update_id not in processing:
-                # processing.append(update.update_id)
+            if not is_processing(update.update_id):
                 eval_update(db, bot, update)
-                # processing.remove(update.update_id)
             else:
                 logger.warning("Update {0} ya procesada".format(update.update_id))
         except Exception as e:
