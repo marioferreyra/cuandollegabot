@@ -59,6 +59,8 @@ def is_processing(update_id):
 
 
 def clear_processing():
+    logger.debug("Limpiando procesados")
+    global processing
     processing = {k: v for k, v in processing.items() if (
         datetime.now() - v).total_seconds() > 120}
 
