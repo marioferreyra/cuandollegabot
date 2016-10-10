@@ -68,8 +68,8 @@ def clear_processing():
 @app.route("/bot", methods=['POST'])
 def new_message():
     # logger.debug(os.environ.get("CL_TOKEN", "cuandollegabot"))
+    clear_processing()
     logger.debug(processing)
-    # clear_processing()
     if request.method == "POST":
         try:
             update = telegram.Update.de_json(request.get_json(force=True))
