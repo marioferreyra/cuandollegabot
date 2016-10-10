@@ -76,11 +76,15 @@ def new_message():
             logger.debug("Update actual %s", update.update_id)
             if not is_processing(update.update_id):
                 eval_update(db, bot, update)
-            else:
-                logger.warning("Update {0} ya procesada".format(update.update_id))
         except Exception as e:
             logger.debug(e)
     return 'ok'
+
+
+@app.route("/processing")
+def get_processing():
+    global processing
+    return str(processing)
 
 
 @app.route("/reloadDBRosario")
