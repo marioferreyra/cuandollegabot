@@ -11,7 +11,7 @@ from constants import (NICE_MESSAGE, COMANDS, COMAND_START, COMAND_HELP,
 from cuandollegabotconfig import OWNER_ID, SKIP_PARADA
 
 logger = logging.getLogger('CuandoLlegaBot')
-sleep_time = 10
+sleep_time = 3
 
 
 def eval_update(db, bot, update):
