@@ -19,7 +19,7 @@ token = app.config["TOKEN"]
 global bot
 bot = telegram.Bot(token=token)
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("CuandoLlegaBot")
 formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 logger.setLevel(logging.DEBUG)
 
