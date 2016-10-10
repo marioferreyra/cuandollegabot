@@ -46,10 +46,15 @@ processing = []
 
 
 def is_processing(f):
+    logger.info("Entrando a is_processing")
+
     def decorator(f):
+        logger.info("Entrando a decorator")
+
         @wraps(f)
         def wrapped(*args, **kwargs):
             try:
+                logger.info("Entrando a wrapped")
                 logger.debug(request.data)
             except Exception as e:
                 logger.error(e)
