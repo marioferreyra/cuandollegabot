@@ -52,7 +52,7 @@ def is_processing(func):
     def wrapper(*args, **kwargs):
         logger.info("Entrando a wrapped")
         json_data = request.get_json()
-        logger.debug(json_data)
+        logger.debug(json_data["update_id"])
         return func(*args, **kwargs)
     return wrapper
 
