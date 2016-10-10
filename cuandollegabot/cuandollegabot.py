@@ -51,6 +51,7 @@ def is_processing(func):
         json_data = request.get_json()
         update_id = json_data["update_id"]
         if update_id in processing:
+            logger.warning("Update {0} ya procesada".format(update_id))
             return 'ok'
         processing.append(update_id)
         ret = func(*args, **kwargs)
