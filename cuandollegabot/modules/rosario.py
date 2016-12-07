@@ -132,7 +132,14 @@ class RosarioCuandoLlega():
             data = {"accion": self.ACTION_INFO, "parada": stop, "linea": idLinea}
             r = requests.post(self.URL_INFO, data=data)
             r.encoding = 'UTF-8'
-            return r.text.splitlines()[:1][-1].strip()
+            arrivos = PQ(".tablaArribos tbody tr", r.text)
+            results = []
+            for arrivo in arrivos:
+                arrivo_tds = PQ("td", arrivo)
+                linea = arrivo_tds[0].text
+                time = arrivo_tds[1].text
+                results.append((linea, time))
+            return self.parseResults(results)
         except Exception as e:
             logger.error(e)
             return "Error, por favor intente nuevamente en unos minutos"
@@ -144,3 +151,6 @@ class RosarioCuandoLlega():
         other_buses = [magic_decode(b['nro'], deco='cp1251') for b in buses]
         # logger.debug(other_buses)
         return other_buses
+
+    def parseResults(self, results):
+        return "\n".join( ["{0}: {1}".format(re[0], re[1]) for re in results])
