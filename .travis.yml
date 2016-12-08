@@ -1,7 +1,7 @@
 sudo: required
 language: python
 python:
-- 3.5.2
+  - 3.5.2
 install: pip install -r requirements.txt
 deploy:
   provider: heroku
@@ -9,4 +9,5 @@ deploy:
     secure: N9oGoR4/D1c231DEIwJqPaC7O4a61xF5zH3zOHcIjIyFYfue71aih+TE4rXvrGVOdjmRhtbLWUmkdnSBnXg8q76VASabXFlVd7Y/KZkudRd1H7i4eoNuuIUGYrnG/3C3HhMn+WdEkyBw1Xktq33mJH42ibWe4T7P3onrY49GRgO0ATY2dRorhTDPoITCP1Es09p5shpAGKxSWiS+t6XMMRRoz7yL3rz/x+226E13AGgnC9Hx9iUxvGa3qpzX2qk/MjbiaYx/EytHj8qXoaX523gUfS/qvwOml+CFHAQcc0bEPv7bhxhpJUrCsYUJ+foctTFcBiP7K5RCWV3aSr01uyNf7VHzW8VJEWdjao6yeG3IJ8x/IaxfTKE0lYGjpUiFZCU5rhUKucasXue+lmGMthgKQuqo0ahjj3cGcNdaGpb3SKdrRKCPTMsh6r9ylzSrRjp4M88AVZR9DeSXM1Owg4QhBSMB0uKvnrPpDF0Dhf6bMI/A0bOJHEgQxBMlskONzTVmMhVe+rIlLVrbTipCDuuJXB2pYN1QggbFTPlxkX/+Omo8cp/Dbrfvd0N0csdiQ99Tqc80us9lzPn85uuywzPFLP5CIMnoy+MkiozwKRww7RSbYFZJ4Z9bz/ZUetDI2P4r2IHevqrUlODYOzMfYdwTk3ZQ+f7Zel/K5xXKH8I=
   app: cuandollegabot
   on: master
-script: cuandollegabot/test/test_rosario.py
+script:
+  - nosetests --exe cuandollegabot/test/
