@@ -134,7 +134,6 @@ class RosarioCuandoLlega():
             r = requests.post(self.URL_INFO, data=data)
             r.encoding = 'UTF-8'
             try:
-                import ipdb; ipdb.set_trace()
                 buses_current_location = re.search(
                     'JSONcoordenadas( )?=( )?(.*);', r.text).group(0)
                 re_string = "JSONcoordenadas( )?=( )?eval\("
