@@ -2,7 +2,6 @@
 import os
 import requests
 import logging
-import datetime
 import time
 from json import loads
 from pymongo import MongoClient
