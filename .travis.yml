@@ -11,3 +11,5 @@ deploy:
   on: master
 script:
   - nosetests --exe cuandollegabot/test/
+after_success:
+  - coveralls
