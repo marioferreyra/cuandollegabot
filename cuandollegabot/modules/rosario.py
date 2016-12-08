@@ -154,6 +154,8 @@ class RosarioCuandoLlega():
                         results.append((linea, time, bus_current_location))
                 return "\n".join(["{0}: {1}{2}".format(re[0], re[1], re[2]) for re in results])
             except Exception as e:
+                logger.error("No se pudo usar el js")
+                logger.error(e)
                 arribos = PQ(".tablaArribos tbody tr", r.text)
                 results = []
                 for arribo in arribos:
