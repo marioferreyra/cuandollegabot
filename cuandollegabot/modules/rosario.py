@@ -4,9 +4,17 @@ import logging
 from json import loads
 import re
 from pyquery import PyQuery as PQ
-from utils import magic_decode
 
 logger = logging.getLogger('CuandoLlegaBot')
+
+
+def magic_decode(text, deco='utf-8-sig', enco='utf-8'):
+    try:
+        return text.decode(deco).encode()
+    except UnicodeEncodeError:
+        return text.encode(enco)
+    except:
+        return text
 
 
 class RosarioCuandoLlega():
