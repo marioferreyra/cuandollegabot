@@ -2,6 +2,7 @@
 import requests
 import logging
 from json import loads
+import re
 from pyquery import PyQuery as PQ
 from utils import magic_decode
 
@@ -132,14 +133,35 @@ class RosarioCuandoLlega():
             data = {"accion": self.ACTION_INFO, "parada": stop, "linea": idLinea}
             r = requests.post(self.URL_INFO, data=data)
             r.encoding = 'UTF-8'
-            arrivos = PQ(".tablaArribos tbody tr", r.text)
-            results = []
-            for arrivo in arrivos:
-                arrivo_tds = PQ("td", arrivo)
-                linea = arrivo_tds[0].text
-                time = arrivo_tds[1].text
-                results.append((linea, time))
-            return self.parseResults(results)
+            try:
+                import ipdb; ipdb.set_trace()
+                buses_current_location = re.search(
+                    'JSONcoordenadas( )?=( )?(.*);', r.text).group(0)
+                re_string = "JSONcoordenadas( )?=( )?eval\("
+                buses_array = eval(re.sub(re_string, '', buses_current_location).replace(');', ''))
+                results = []
+                for b in buses_array:
+                    if b.get('interno'):
+                        linea = b.get("LineaBandera")
+                        time = b.get("arribo")
+                        latitud = b.get("latitud")
+                        longitud = b.get("longitud")
+                        try:
+                            # TODO Buscar calles donde está ahora
+                            raise Exception("No implementado")
+                        except:
+                            bus_current_location = ""
+                        results.append((linea, time, bus_current_location))
+                return "\n".join(["{0}: {1}{2}".format(re[0], re[1], re[2]) for re in results])
+            except Exception as e:
+                arribos = PQ(".tablaArribos tbody tr", r.text)
+                results = []
+                for arribo in arribos:
+                    arribo_tds = PQ("td", arribo)
+                    linea = arribo_tds[0].text
+                    time = arribo_tds[1].text
+                    results.append((linea, time))
+                return "\n".join(["{0}: {1}".format(re[0], re[1]) for re in results])
         except Exception as e:
             logger.error(e)
             return "Error, por favor intente nuevamente en unos minutos"
@@ -151,6 +173,3 @@ class RosarioCuandoLlega():
         other_buses = [magic_decode(b['nro'], deco='cp1251') for b in buses]
         # logger.debug(other_buses)
         return other_buses
-
-    def parseResults(self, results):
-        return "\n".join( ["{0}: {1}".format(re[0], re[1]) for re in results])
